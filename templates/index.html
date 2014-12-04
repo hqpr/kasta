@@ -1,0 +1,23 @@
+{% extends base.html %}
+ 
+{% block title %} {{ title }} {% end %}
+
+{% block body %}
+<div id="page-content-wrapper">
+    <a href="/add" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span> Add Post</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                {% for d in data %}
+                    <h1><a href="/post/{{ d[0] }}">{{ d[1]['name'] }}</a></h1>
+                    <p><span class="glyphicon glyphicon-time"></span> {{ d[1]['created_date'] }}</p>
+                    <p>by <a href="">{{ d[1]['author'] }}</a></p>
+                    <p>{{ d[1]['body'] }}</p>
+                <hr/>
+                {% end %}
+                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> <br/>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
