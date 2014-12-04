@@ -19,7 +19,6 @@ for keys in post_bucket.stream_keys():
 exit()
 """
 
- 
 client = riak.RiakClient(pb_port=8087, protocol='pbc')
 post_bucket = client.bucket('Posts')
 category_bucket = client.bucket('Categories')
@@ -105,6 +104,7 @@ class EditPostHandler(tornado.web.RequestHandler):
         entry.data['body'] = body
         entry.data['author'] = author
         entry.data['is_active'] = is_active
+        entry.store()
         cat = category_bucket.get(post_id)
         cat.data = category
         cat.store()

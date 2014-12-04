@@ -6,7 +6,6 @@
 <form class="form-horizontal" method="post" action="/edit/{{ key }}">
     <fieldset>
 
-        <!-- Form Name -->
         <legend>Edit post</legend>
 
         <!-- Text input-->
@@ -15,7 +14,6 @@
             <div class="col-md-4">
                 <input id="name" name="name" type="text" placeholder="" class="form-control input-md" required=""
                        value="{{ data['name'] }}">
-
             </div>
         </div>
 
@@ -25,7 +23,6 @@
             <div class="col-md-4">
                 <input id="author" name="author" type="text" placeholder="" class="form-control input-md" required=""
                         value="{{ data['author'] }}">
-
             </div>
         </div>
 
@@ -50,7 +47,7 @@
 
         <!-- Select Basic -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="active">Status</label>
+          <label class="col-md-4 control-label" for="is_active">Status</label>
           <div class="col-md-4">
             <select id="is_active" name="is_active" class="form-control">
               <option value="1">Active</option>
@@ -64,7 +61,6 @@
             <label class="col-md-4 control-label" for="button1id">Save changes?</label>
             <div class="col-md-8">
                 <button type="submit" id="button1id" name="button1id" class="btn btn-success">Save</button>
-                <!--<button type="reset" id="button2id" name="button2id" class="btn btn-danger">No</button>-->
             </div>
         </div>
 
