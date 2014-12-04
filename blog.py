@@ -86,9 +86,7 @@ class PostHandler(tornado.web.RequestHandler):
         self.render("single.html", data=widget, key=post_id)
 
     def delete(self, post_id):
-        post = post_bucket.get(post_id)
-        post.delete()
-        self.redirect('/')
+        post_bucket.get(post_id).delete()
 
 
 class EditPostHandler(tornado.web.RequestHandler):

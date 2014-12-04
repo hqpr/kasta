@@ -17,8 +17,9 @@
                     <p>{{ data['body'] }}</p>
                     <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                     <a href="/edit/{{ key }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                    <!--<a href="/delete/{{ key }}" type="submit" class="btn btn-danger" id="delete">Delete this post</a>-->
                     <a href="#" class="btn btn-danger" id="delete"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+
+                    <div style="visibility: hidden; margin-top: 50px;"  class="alert alert-success"  id="ok" role="alert"><b>Post Deleted.</b> You will be redirected soon</div>
 
             </div>
         </div>
@@ -31,9 +32,13 @@ $("#delete").click(function(e) {
         url: '/post/{{ key }}',
         type: 'DELETE',
         success: function(result) {
-            alert("success");
-            }
+                $("#ok").css('visibility', 'visible');
+            setTimeout(function() {
+                window.location.href = "/";
+            }, 3000);
+        }
     });
+
 });
 
 </script>
