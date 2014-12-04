@@ -7,14 +7,22 @@ from tornado.options import define, options
 import riak
 import datetime
 
-# mongodb example
-# https://www.safaribooksonline.com/library/view/introduction-to-tornado/9781449312787/ch04.html
-# riak api
-# http://docs.basho.com/riak/latest/dev/taste-of-riak/querying-python/ - samples of data
-# http://books.google.com.ua/books?id=B-krWzb6KMQC&pg=PA9&lpg=PA9&dq=save_to_db+tornado&source=bl&ots=3FYi72dccm&sig=trRQQpd7o0cD0mNXZtv-8h8q4H4&hl=ru&sa=X&ei=qRx-VNXbL8bnywPBp4LYCQ&ved=0CCEQ6AEwAA#v=onepage&q=save_to_db%20tornado&f=false
-# comments  http://pragmaticbadger.com/latestnews/2010/nov/16/getting-started-riak-python/
+"""
+http://docs.basho.com/riak/latest/dev/taste-of-riak/querying-python/ - samples of data
+http://pragmaticbadger.com/latestnews/2010/nov/16/getting-started-riak-python/ - comments
+https://riak-python-client.readthedocs.org/en/1.5-stable/tutorial.html
+
+for keys in post_bucket.stream_keys():
+    for key in keys:
+        print('Deleting %s' % key)
+        post_bucket.delete(key)
+exit()
+"""
+
  
 client = riak.RiakClient(pb_port=8087, protocol='pbc')
+post_bucket = client.bucket('Posts')
+category_bucket = client.bucket('Categories')
 post = {
     'post_id': 1,
     'name': "Black Hole",
@@ -32,21 +40,12 @@ category = {
     'category': 'News'
 }
  
-post_bucket = client.bucket('Posts')
-category_bucket = client.bucket('Categories')
 pb = post_bucket.new(str(post['post_id']), data=post)
 pb.store()
 cb = category_bucket.new(str(category['post_id']), data=category)
 cb.store()
 
-
 define("port", default=8000, help="run on the given port", type=int)
-
-# for keys in post_bucket.stream_keys():
-#     for key in keys:
-#         print('Deleting %s' % key)
-#         post_bucket.delete(key)
-# exit()
 
 
 class Application(tornado.web.Application):
@@ -65,7 +64,6 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **settings)
 
 
-# https://riak-python-client.readthedocs.org/en/1.5-stable/tutorial.html
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         query = riak.RiakMapReduce(client).add('Posts')
@@ -137,7 +135,6 @@ class AddPostHandler(tornado.web.RequestHandler):
         cat = category_bucket.new(str(k), data=category)
         cat.store()
         self.redirect('/post/%s' % entry.key)
-
 
 
 if __name__ == "__main__":
